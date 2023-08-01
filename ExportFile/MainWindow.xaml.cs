@@ -70,11 +70,15 @@ namespace ExportFile
                                     catch (Exception ex)
                                     {
                                         //내용,제목
-                                        MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (3-1)");
+                                        //MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (3-1)");
+                                        string msg = string.Format("Exception (3-1) - {0} \t\n {1} \t\n", ex.Message.ToString(), ex.StackTrace.ToString());
+                                        AddLog(msg);
                                     }
                                     finally
                                     {
                                         fileList.Add(sFile);
+
+                                        AddLog(sFile);
                                     }
                                 }
                                
@@ -89,18 +93,25 @@ namespace ExportFile
                                 catch(Exception ex)
                                 {
                                     //내용,제목
-                                    MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (3-2)");
+                                    //MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (3-2)");
+                                    string msg = string.Format("Exception (3-2) - {0} \t\n {1} \t\n", ex.Message.ToString(), ex.StackTrace.ToString());
+                                    AddLog(msg);
                                 }
                                 finally
                                 {
                                     fileList.Add(sFile);
+
+                                    AddLog(sFile);
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
                             //내용,제목
-                            MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (2)");
+                            //MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (2)");
+                            string msg = string.Format("Exception (2) - {0} \t\n {1} \t\n",ex.Message.ToString() , ex.StackTrace.ToString());
+
+                            AddLog(msg);
                         }
                         //finally
                         //{
@@ -112,7 +123,9 @@ namespace ExportFile
             catch (Exception ex)
             {
                 //내용,제목
-                MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (1)");
+                //MessageBox.Show(ex.Message.ToString() + "\t\n: " + ex.StackTrace.ToString(), "Exception (1)");
+                string msg = string.Format("Exception (1) - {0} \t\n {1} \t\n", ex.Message.ToString(), ex.StackTrace.ToString());
+                AddLog(msg);
             }
             finally
             {
@@ -120,17 +133,49 @@ namespace ExportFile
                 //내용,제목
                 string msg = $"{target_path} ({fileList.Count}개)";
 
+                AddLog(msg);
+
                 //파일 목록
                 //if (!string.IsNullOrEmpty(files))
                 //{
                 //    msg += "\t\n" + files;
                 //}
 
-                MessageBox.Show(msg, "파일 복사 완료");
+                //MessageBox.Show(msg, "파일 복사 완료");
+
+
+                string strFolderPath = TBPath2.Text;
+                System.Diagnostics.Process.Start(@strFolderPath);
             }
-           
+
+        }
 
 
+        public void AddLog(string msg)
+        {
+            TextRange range = new TextRange(TBLog.Document.ContentStart, TBLog.Document.ContentEnd);
+
+            string totMsg = msg + Environment.NewLine + range.Text;
+
+            FlowDocument fd = new FlowDocument();
+            fd.Blocks.Add(new Paragraph(new Run(totMsg)));
+            TBLog.Document = fd;
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBox item = ((sender as Border).Child as TextBox);
+
+            item.Focus();
+
+            item.SelectionStart = item.Text.Length;
+            item.SelectionLength = 0;
+
+            if (e.ClickCount == 2)
+            {
+                item.SelectAll();
+            }
+            //((TextBox)(sender as Border).Child))
         }
     }
 }

@@ -51,5 +51,10 @@ using System.Windows;
 // 모든 값을 지정하거나 아래와 같이 '*'를 사용하여 빌드 번호 및 수정 번호를
 // 기본값으로 할 수 있습니다.
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
+
+// 1.0.0 (주.부.수)
+// 주 (major) : 기존 버전과 호환되지 않게 API가 바뀌면 올림
+// 부 (minor) : 기존 버전과 호환되면서 새로운 기능을 추가할 때 올림
+// 수 (patch) : 기존 버전과 호환되면서 버그를 수정한 경우 올림
